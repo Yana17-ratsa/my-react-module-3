@@ -1,5 +1,8 @@
-import { Formik, Form, Field } from 'formik';
+/* eslint-disable no-mixed-spaces-and-tabs */
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from "yup";
 import { useId } from "react";
+
 
 
 const initialValues = {
@@ -8,6 +11,14 @@ const initialValues = {
     message: "",
     level: "good",
   };
+
+  const FeedbackSchema = Yup.object().shape({
+    username: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
+    email: Yup.string().email("Must be a valid email!").required("Required"),
+    message: Yup.string().min(3, "Too short").max(256, "Too long").required("Required"),
+    level: Yup.string().oneOf(["good", "neutral", "bad"]).required("Required")
+  });
+
 
 
 const FeedbackForm = () => {
@@ -23,23 +34,35 @@ const FeedbackForm = () => {
 	};
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={FeedbackSchema}>
 			<Form>
-                <label htmlFor={nameFieldId}></label>
-                <Field type="text" name="username" />
+                <div>
+                  <label htmlFor={nameFieldId}>Name</label>
+                  <Field type="text" name="username" id={nameFieldId} />
+                  <ErrorMessage name="username" component="span"/>
+                </div>
 
-                <label htmlFor={emailFieldId}></label>
-				<Field type="email" name="email" />
+                <div>
+                  <label htmlFor={emailFieldId}>Email</label>  
+  				        <Field type="email" name="email" id={emailFieldId} />
+                  <ErrorMessage name="email" component="span"/>
+                </div>
 
-                <label htmlFor={msgFieldId}>Message</label>
-                <Field as="textarea" name="message" id={msgFieldId} rows="5" />
+                <div>
+                  <label htmlFor={msgFieldId}>Message</label>
+                  <Field as="textarea" name="message" id={msgFieldId} rows="5" />
+                  <ErrorMessage name="message" component="span"/>
+                </div>
 
-                <label htmlFor={levelFieldId}>Service satisfaction level</label>
-                <Field as="select" name="level" id={levelFieldId}>
-                  <option value="good">Good</option>
-                  <option value="neutral">Neutral</option>
-                  <option value="bad">Bad</option>
-                </Field>
+                <div>
+                  <label htmlFor={levelFieldId}>Service satisfaction level</label>
+                  <Field as="select" name="level" id={levelFieldId}>
+                    <option value="good">Good</option>
+                    <option value="neutral">Neutral</option>
+                    <option value="bad">Bad</option>
+                  </Field>
+                  <ErrorMessage name="level" component="span"/>
+                </div>
                 
 				<button type="submit">Submit</button>
 			</Form>
