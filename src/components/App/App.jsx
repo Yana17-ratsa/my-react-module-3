@@ -1,6 +1,6 @@
 import LoginForm from '../Form/LoginForm';
 // import MyComponent from "../UseId/UseId";
-// import SearchBar from "../SearchBar/SearchBar";
+import SearchBar from "../SearchBar/SearchBar";
 import LangSwitcher from '../LangSwitcher/LangSwitcher';
 import Agreement from '../Checkbox/Checkbox';
 import FeedbackForm from '../Formik-FeedbackForm/FeedbackForm';
@@ -59,6 +59,7 @@ function App() {
       </div>
 
       <Agreement />
+      <SearchBar/>
       <FeedbackForm/>
     </>
   );

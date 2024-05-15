@@ -13,6 +13,6 @@ const SearchBar = () => {
       <p>{inputValue}</p>
     </div>
   );
-}
+} 
 
 export default SearchBar;
